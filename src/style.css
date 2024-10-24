@@ -1,0 +1,209 @@
+.main {
+    display: flex;
+    background-color: #F3F6FD;
+}
+
+.app-logo {
+    width: 4.125rem;
+    height: 4.4375rem;
+}
+
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 9.4375rem;
+    height: 100vh;
+    background-color: #FBFAFF;
+}
+
+.sidebar__item {
+    background-color: #FFFFFF;
+    box-shadow: 0 8px 14px 0 #3E6BE01F;
+    border: none;
+    width: 2.875rem;
+    height: 2.8125rem;
+    border-radius: 0.875rem;
+    cursor: pointer;
+}
+
+.sidebar__item:hover {
+    background-color: #6A6AFB;
+}
+
+.sidebar__item:hover img {
+    filter: brightness(0) invert(1);
+}
+
+.sidebar__item_active {
+    background-color: #6A6AFB;
+}
+
+.sidebar__item_active img {
+    filter: brightness(0) invert(1);
+}
+
+.sidebar__add {
+    background: none;
+    border: 1px solid #CAD5FF;
+}
+
+.sidebar__add:hover {
+    background: #EFF2FF;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - 9.4375rem);
+}
+
+.content__header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4rem;
+}
+
+.content__main {
+    padding: 2.1875rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.progress {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.progress__text {
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+}
+
+.progress__name {
+    font-size: 0.875rem;
+    line-height: 1rem;
+    color: #232360;
+}
+
+.progress__percent {
+    font-size: 0.75rem;
+    line-height: 0.8125rem;
+    color: #768396;
+}
+
+.progress__bar {
+    width: 100%;
+    background: #E6E9ED;
+    border-radius: 0.25rem;
+    height: 0.3125rem;
+    position: relative;
+}
+
+.progress__cover-bar {
+    transition: width .4s ease-in;
+    position: absolute;
+    height: 0.3125rem;
+    border-radius: 0.25rem;
+    background-color: #5051F9;
+}
+
+* {
+    font-family: Comfortaa;
+    font-weight: 400;
+}
+
+h1 {
+    font-size: 1.875rem;
+    line-height: 2.0625rem;
+    color: #000000;
+}
+
+.habbit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFFFFF;
+    border-radius: 0.625rem;
+}
+
+.habbit__day {
+    background: #FBFAFF;
+    border-radius: 10px 0 0 10px;
+    border-right: 1px solid #E7EBFB;
+    font-size: 0.875rem;
+    line-height: 1rem;
+    padding: 1.25rem 2.5rem;
+    min-width: 2.5rem;
+}
+
+.habbit__comment {
+    font-size: 0.875rem;
+    line-height: 1rem;
+    padding-left: 1rem;
+}
+
+.habbit__delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 1rem;
+    border-radius: 0.3125rem;
+    padding: 0.125rem;
+}
+
+.habbit__delete:hover {
+    background-color: #EFF2FF;
+}
+
+input {
+    background-color: #FFFFFF;
+    border: 1px solid #E7EBFB;
+    border-radius: 0.5625rem;
+    padding: 0.75rem 1.25rem;
+    flex: 1;
+    font-size: 0.875rem;
+    line-height: 1rem;
+}
+
+input::placeholder {
+    color: #8899A8;
+}
+
+.comment-icon {
+    position: absolute;
+    top: 0.625rem;
+    left: 2.4rem;
+}
+
+.form__input {
+    padding-left: 2.8125rem;
+}
+
+.habbit__form {
+    display: flex;
+    width: 80%;
+    font-size: 0.875rem;
+    line-height: 1rem;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.habbit__ok-button {
+    background-color: #EDECFE;
+    border-radius: 0.5625rem;
+    border: none;
+    font-size: 0.8125rem;
+    line-height: 0.875rem;
+    color: #5051F9;
+    cursor: pointer;
+    margin: .4rem;
+}
+
+.habbit__ok-button:hover {
+    background-color: #dcdaff;
+}
