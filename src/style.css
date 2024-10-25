@@ -207,3 +207,8 @@ input::placeholder {
 .habbit__ok-button:hover {
     background-color: #dcdaff;
 }
+
+.error {
+    border: 1px dashed red;
+    background-color: rgba(255, 0, 0, 0.34);
+}

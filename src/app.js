@@ -1,7 +1,7 @@
 'use strict'
 
 const HABBIT_KEY = 'HABBIT_KEY';
-const habbits = load() || [];
+const habbits = load();
 let activeSidebarItemID = '1';
 const page = {
         sidebar: querySelector('.sidebar'),
@@ -43,7 +43,6 @@ function habbitContentRender(habbit) {
     renderHabbitDays(habbit.days);
 }
 
-
 function renderHabbitHeader(habbit){
     page.header.h1.innerText = habbit.name;
     const progress = habbit.days.length / habbit.target * 100;
@@ -59,13 +58,14 @@ function renderHabbitDays(days) {
         const tamplate = `                
                     <div class="habbit__day">Day ${i+1}</div>
                     <div class="habbit__comment">${d.comment}</div>
-                    <button class="habbit__delete">
+                    <button class="habbit__delete" onclick="onClickDeleteDayHandler(event)">
                         <img src="src/assets/delete.svg">
                     </button>
 `;
         const elem = createElement('div');
         addClass('habbit', elem);
         elem.innerHTML = tamplate;
+        elem.setAttribute('id', i);
         page.main.appendChild(elem);
     });
     page.main.appendChild(getFormElem(days));
@@ -86,18 +86,36 @@ function getFormElem(days){
 }
 
 function onSubmitDaysCommentHandler(event){
-    // TODO добавить ux на пустой инпут и добавить очистку формы при успехе
-    addDay(event);
+    if (!addDay(event)) return;
+    activeHabitRender();
+    saveHabbitsToLocalStorage();
+}
+
+function onClickDeleteDayHandler(event){
+    const dayID = event.currentTarget.parentNode.id;
+    const activeDays = habbits[activeSidebarItemID - 1].days;
+    activeDays.splice(dayID, 1);
     activeHabitRender();
     saveHabbitsToLocalStorage();
 }
 
 function addDay(event){
+    const form = event.target;
     event.preventDefault();
     const comment = new FormData(event.target).get('comment');
-    if (comment) habbits[activeSidebarItemID - 1].days.push({comment});
+    if (comment) {
+        habbits[activeSidebarItemID - 1].days.push({comment});
+        return true;
+    } else {
+        visualError(form['comment'], 1000);
+        return false;
+    }
 }
 
+function visualError(elem, delayTime){
+    addClass('error', elem);
+    setTimeout(() => removeClass('error', elem), delayTime);
+}
 
 function renderHabbitSidebarBtn(elem){
     const button = getSidebarBtnElem();
@@ -126,8 +144,6 @@ function getSidebarBtnElem(){
 function load() {
     const raw = localStorage.getItem(HABBIT_KEY);
     return JSON.parse(raw) || [];
-
-
 }
 
 function saveHabbitsToLocalStorage() {
