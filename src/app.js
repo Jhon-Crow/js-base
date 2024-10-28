@@ -5,8 +5,26 @@ const habbits = load();
 const imgsArr = [
     'Dumbbell',
     'water',
-    'food'
-//     TODO добавить по больше значков
+    'food',
+    'alarm-clock',
+    'bed',
+    'book',
+    'books',
+    'clock',
+    'close',
+    'code',
+    'flower',
+    'mortarboard',
+    'music',
+    'pen-nib',
+    'pills',
+    'recycle',
+    'shopping-basket',
+    'snow',
+    'soccer',
+    'target-arrow',
+    'wrench'
+//     TODO добавить ещё 9
 ];
 
 const renderAllHabbitsSidebarBtn = (habbitsArr) => habbitsArr.map(elem => renderHabbitSidebarBtnInDiv(elem));

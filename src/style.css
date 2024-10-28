@@ -275,7 +275,13 @@ input[type="radio"] {
 
 .icon-select {
     display: flex;
+    flex-wrap: wrap;
+    padding: 0 1rem 0 2.4rem;
     gap: .4rem;
+}
+
+img {
+    fill: #5051F9;
 }
 
 .icon-label {
