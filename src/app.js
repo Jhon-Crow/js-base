@@ -23,8 +23,16 @@ const imgsArr = [
     'snow',
     'soccer',
     'target-arrow',
-    'wrench'
-//     TODO добавить ещё 9
+    'wrench',
+    'flag',
+    'frame',
+    'heart',
+    'knight',
+    'palette',
+    'trophy',
+    'users',
+    'utensils',
+    'wifi-slash'
 ];
 
 const renderAllHabbitsSidebarBtn = (habbitsArr) => habbitsArr.map(elem => renderHabbitSidebarBtnInDiv(elem));
@@ -49,6 +57,7 @@ renderApp();
 
 function renderApp() {
     if (habbits.length){
+        const activeID = idToIndexOfHabbits(Number(document.location.hash.replace('#', '')) - 1);
         renderAllHabbitsSidebarBtn(habbits);
         page.sidebarHabbitButtons = querySelectorAll('.sidebar__item');
         page.sidebarDivs = querySelectorAll('.sidebar__div');
@@ -56,8 +65,7 @@ function renderApp() {
         addEventListenerForEach(page.sidebarHabbitButtons, sidebarItemSetActiveAndRenderContent, 'click');
         addNewHabbitButton();
         renderPopupIcons(imgsArr);
-        sidebarItemSetActiveAndRenderContent(page.sidebarHabbitButtons[0]);
-        // habbitContentRender(habbits[idToIndex(activeSidebarItemID)]);
+        sidebarItemSetActiveAndRenderContent(page.sidebarHabbitButtons[activeID > -1 ? activeID : 0]);
     } else {
         addNewHabbitButton();
         renderPopupIcons(imgsArr);
@@ -65,8 +73,7 @@ function renderApp() {
 }
 
 function activeHabitContentRender() {
-    console.log(idToIndex(activeSidebarItemID), habbits);
-    habbitContentRender(habbits[idToIndex(activeSidebarItemID)])
+    habbitContentRender(habbits[idToIndexOfHabbits(activeSidebarItemID)])
 }
 
 
@@ -75,17 +82,20 @@ function addEventListenerForEach(elemsArr, handler, strEventName){
 }
 
 function sidebarItemSetActiveAndRenderContent(target) {
-    console.log(target)
-        const prevElem = page.sidebarHabbitButtons[activeSidebarItemID - 1];
-        if (prevElem) removeIconActiveClass(prevElem);
+    removeIconActiveClass(document.getElementById(activeSidebarItemID));
+    if (habbits.length === 1){
+        const lastHabbitBtn = page.sidebar.firstChild.firstChild;
+        addClass('icon_active', lastHabbitBtn);
+        activeSidebarItemID = lastHabbitBtn.id;
+    } else {
         addClass('icon_active', target);
         activeSidebarItemID = target.id;
-    console.log(activeSidebarItemID)
-        activeHabitContentRender();
+    }
+    activeHabitContentRender();
+    document.location.replace(document.location.pathname + '#' + activeSidebarItemID);
 }
 
 function habbitContentRender(habbit) {
-    console.log(habbit)
     if (!habbit) return undefined;
     renderHabbitHeader(habbit);
     renderHabbitDays(habbit.days);
@@ -135,26 +145,17 @@ function renderHabbitDeleteBtn(habbitsItem){
     return button;
 }
 
-function idToIndex(id) {
+function idToIndexOfHabbits(id) {
     const index = habbits.findIndex(obj => obj.id == id);
-    console.log(id, index, habbits[index])
     return index;
 }
 
 function onClickDeleteHabbitHandler(event){
-
-    // TODO
     const divToDelete = event.currentTarget.parentNode;
-    const index = idToIndex(event.currentTarget.previousSibling.id);
-    // console.log([...habbits], event.currentTarget.previousSibling.id)
-    // console.log(habbits[index])
+    const index = idToIndexOfHabbits(event.currentTarget.previousSibling.id);
     habbits.splice(index, 1);
     divToDelete.remove();
-    // if (!habbits.length){
-    //     setEmptyMainContent();
-    // }
     if (habbits.length) {
-        console.log(page.sidebarHabbitButtons[0])
         sidebarItemSetActiveAndRenderContent(page.sidebarHabbitButtons[0])
     } else {
         setEmptyMainContent();
@@ -232,7 +233,7 @@ function addNewHabbieToArr(event){
 }
 
 function onClickDeleteDayHandler(index){
-    const activeDays = habbits[activeSidebarItemID - 1].days;
+    const activeDays = habbits[idToIndexOfHabbits(activeSidebarItemID)].days;
     activeDays.splice(index, 1);
     activeHabitContentRender();
     saveHabbitsToLocalStorage();
@@ -242,7 +243,8 @@ function addDayChangeHabbitsArr(event){
     const target = event.target;
     const comment = getFormOnSubmit(target).get('comment');
     if (comment) {
-        habbits[activeSidebarItemID - 1].days.push({comment});
+        habbits[idToIndexOfHabbits(activeSidebarItemID)].days.push({comment});
+        console.log(habbits[idToIndexOfHabbits(activeSidebarItemID)])
         return true;
     } else {
         visualError(target['comment'], 1000);
@@ -314,7 +316,8 @@ function saveHabbitsToLocalStorage() {
 }
 
 function addClass(className, elem) {
-    elem.classList.add(className);
+    if(!elem) return false;
+        elem.classList.add(className);
 }
 
 function removeClass(className, elem){
@@ -322,7 +325,9 @@ function removeClass(className, elem){
 }
 
 function removeIconActiveClass(elem){
-    removeClass('icon_active', elem);
+    elem
+        ? removeClass('icon_active', elem)
+        : null;
 }
 
 function querySelector(str){

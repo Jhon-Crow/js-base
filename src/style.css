@@ -3,19 +3,23 @@
     background-color: #F3F6FD;
 }
 
-.app-logo {
-    width: 4.125rem;
-    height: 4.4375rem;
-}
-
 .sidebar {
+    padding: .4rem 0 .4rem 0;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     width: 9.4375rem;
-    height: 100vh;
+    height: calc(100vh - 7.9rem);
     background-color: #FBFAFF;
+    overflow-y: scroll;
+}
+
+.app-logo {
+    width: 4.125rem;
+    height: 4.4375rem;
+    position: sticky;
+    margin: .4rem 0 1rem 2rem;
 }
 
 .sidebar__item {
