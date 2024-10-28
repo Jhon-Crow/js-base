@@ -1,0 +1,352 @@
+.main {
+    height: 98vh;
+    display: flex;
+    background-color: #F3F6FD;
+    justify-content: space-between;
+}
+
+.sidebar {
+    position: fixed;
+    padding: .4rem 0 .4rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 9.4375rem;
+    height: calc(100vh - 7.9rem);
+    background-color: rgba(251, 250, 255, 0.62);
+    overflow-y: scroll;
+    bottom: 0;
+}
+
+.app-logo {
+    width: 4.125rem;
+    height: 4.4375rem;
+    position: fixed;
+    margin: .4rem 0 1rem 2rem;
+}
+
+.blur-bg {
+    backdrop-filter: blur(2px);
+}
+
+.sidebar__item {
+    background-color: #FFFFFF;
+    box-shadow: 0 8px 14px 0 #3E6BE01F;
+    border: none;
+    width: 2.875rem;
+    height: 2.8125rem;
+    border-radius: 0.875rem;
+    cursor: pointer;
+}
+
+.sidebar__div {
+    position: relative;
+}
+
+.sidebar__delete {
+    position: absolute;
+    left: 3.2rem;
+    top: .5rem;
+    opacity: 5%;
+}
+
+.sidebar__delete:hover {
+    opacity: 60%;
+}
+
+.sidebar__item:hover {
+    background-color: #6A6AFB;
+}
+
+.sidebar__item:hover img {
+    filter: brightness(0) invert(1);
+}
+
+.sidebar__add {
+    box-shadow: 0 8px 14px 0 #3E6BE01F;
+    width: 2.875rem;
+    height: 2.8125rem;
+    border-radius: 0.875rem;
+    cursor: pointer;
+    background: none;
+    border: 1px solid #CAD5FF;
+}
+
+.sidebar__add:hover {
+    background: #EFF2FF;
+}
+
+.sidebar__add:hover img {
+    filter: brightness(0) invert(1);
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    width: calc(100vw - 9.4375rem);
+}
+
+.content__header {
+    margin-left: 6.525rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4rem;
+}
+
+.content__main {
+    margin-left: .4rem;
+    padding: 2.1875rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.progress {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.progress__text {
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+}
+
+.progress__name {
+    font-size: 0.875rem;
+    line-height: 1rem;
+    color: #232360;
+}
+
+.progress__percent {
+    font-size: 0.75rem;
+    line-height: 0.8125rem;
+    color: #768396;
+}
+
+.progress__bar {
+    width: 100%;
+    background: #E6E9ED;
+    border-radius: 0.25rem;
+    height: 0.3125rem;
+    position: relative;
+}
+
+.progress__cover-bar {
+    transition: width .4s ease-in;
+    position: absolute;
+    height: 0.3125rem;
+    border-radius: 0.25rem;
+    background-color: #5051F9;
+}
+
+* {
+    font-family: Comfortaa;
+    font-weight: 400;
+}
+
+h1 {
+    font-size: 1.875rem;
+    line-height: 2.0625rem;
+    color: #000000;
+}
+
+.habbit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    overflow-wrap: anywhere;
+    background: #FFFFFF;
+    border-radius: 0.625rem;
+}
+
+.habbit__day {
+    background: #FBFAFF;
+    border-radius: 10px 0 0 10px;
+    border-right: 1px solid #E7EBFB;
+    font-size: 0.875rem;
+    line-height: 1rem;
+    padding: 1.25rem 2.5rem;
+    min-width: 2.57rem;
+}
+
+.habbit__comment {
+    font-size: 0.875rem;
+    line-height: 1rem;
+    padding-left: 1rem;
+}
+
+.habbit__delete {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-right: 1rem;
+    border-radius: 0.3125rem;
+    padding: 0.125rem;
+}
+
+.habbit__delete:hover {
+    background-color: #EFF2FF;
+}
+
+input {
+    background-color: #FFFFFF;
+    border: 1px solid #E7EBFB;
+    border-radius: 0.5625rem;
+    padding: 0.75rem 1.25rem;
+    flex: 1;
+    font-size: 0.875rem;
+    line-height: 1rem;
+}
+
+input::placeholder {
+    color: #8899A8;
+}
+
+.comment-icon {
+    position: absolute;
+    top: 0.925rem;
+    left: 2.4rem;
+}
+
+.form__input {
+    padding-left: 2.8125rem;
+}
+
+.habbit__form {
+    display: flex;
+    width: 80%;
+    font-size: 0.875rem;
+    line-height: 1rem;
+    padding-left: 1rem;
+    position: relative;
+}
+
+.button {
+    background-color: #EDECFE;
+    border-radius: 0.5625rem;
+    border: none;
+    font-size: 0.8125rem;
+    line-height: 0.875rem;
+    color: #5051F9;
+    cursor: pointer;
+    margin: .4rem;
+    padding: .7rem 1rem;
+}
+
+.button:hover {
+    background-color: #dcdaff;
+}
+
+.error {
+    border: 1px dashed red;
+    background-color: rgba(255, 0, 0, 0.34);
+}
+
+.cover {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cover_hidden {
+    display: none;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+.popup {
+    background: #FFFFFF;
+    box-shadow: 0rem 0.5rem 0.875rem 0.75rem rgba(56, 56, 56, 0.05);
+    border-radius: 0.625rem;
+    max-width: 37.5rem;
+    width: 100%;
+    padding: 1.25rem;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .8rem;
+}
+
+.popup__close {
+    position: absolute;
+    right: 0.9375rem;
+    top: 0.9375rem;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
+
+.icon-select {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 1rem 0 2.4rem;
+    gap: .4rem;
+}
+
+img {
+    fill: #5051F9;
+}
+
+.icon-label {
+    color: #8899A8;
+}
+
+.icon {
+    border: 1px solid #5051F9;
+    border-radius: 0.875rem;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.8125rem;
+    height: 2.8125rem;
+    cursor: pointer;
+}
+
+.icon:hover {
+    background-color: #6A6AFB;
+}
+
+.icon:hover img {
+    filter: brightness(0) invert(1);
+}
+
+input[type="radio"]:checked + label {
+    background-color: #6A6AFB;
+}
+
+input[type="radio"]:checked + label img {
+    filter: brightness(0) invert(1);
+}
+
+.icon_active {
+    background-color: #6A6AFB;
+}
+
+.icon_active img {
+    filter: brightness(0) invert(1);
+}
+
+.popup__form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.popup__form input {
+    width: 80%;
+}
