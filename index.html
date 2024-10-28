@@ -11,8 +11,8 @@
 <body>
     <div class="main">
         <div>
-            <img class="app-logo" src="src/assets/icon.svg">
-            <aside class="sidebar"></aside>
+            <img class="app-logo blur-bg" src="src/assets/icon.svg">
+            <aside class="sidebar blur-bg"></aside>
         </div>
         <div class="content">
             <header class="content__header">
@@ -39,7 +39,7 @@
             <form onsubmit="onSubmitPopupHandler(event)" class="popup__form">
             <div class="icon-select"></div>
                 <input type="text" name="name" placeholder="Название"/>
-                <input type="text" name="aim" placeholder="Цель"/>
+                <input type="text" name="aim" placeholder="Цель (только числа)"/>
                 <button class="button" type="submit">Добавить</button>
             </form>
             <button class="popup__close" onclick="togglePopup()">

@@ -1,9 +1,11 @@
 .main {
     display: flex;
     background-color: #F3F6FD;
+    justify-content: space-between;
 }
 
 .sidebar {
+    position: fixed;
     padding: .4rem 0 .4rem 0;
     display: flex;
     flex-direction: column;
@@ -11,15 +13,20 @@
     align-items: center;
     width: 9.4375rem;
     height: calc(100vh - 7.9rem);
-    background-color: #FBFAFF;
+    background-color: rgba(251, 250, 255, 0.62);
     overflow-y: scroll;
+    bottom: 0;
 }
 
 .app-logo {
     width: 4.125rem;
     height: 4.4375rem;
-    position: sticky;
+    position: fixed;
     margin: .4rem 0 1rem 2rem;
+}
+
+.blur-bg {
+    backdrop-filter: blur(2px);
 }
 
 .sidebar__item {
@@ -80,12 +87,14 @@
 }
 
 .content__header {
+    margin-left: 6.525rem;
     display: flex;
     justify-content: space-between;
     padding: 0 4rem;
 }
 
 .content__main {
+    margin-left: .4rem;
     padding: 2.1875rem;
     display: flex;
     flex-direction: column;
@@ -147,6 +156,7 @@ h1 {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    overflow-wrap: anywhere;
     background: #FFFFFF;
     border-radius: 0.625rem;
 }
@@ -158,7 +168,7 @@ h1 {
     font-size: 0.875rem;
     line-height: 1rem;
     padding: 1.25rem 2.5rem;
-    min-width: 2.5rem;
+    min-width: 2.57rem;
 }
 
 .habbit__comment {

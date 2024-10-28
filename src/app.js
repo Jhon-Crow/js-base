@@ -341,4 +341,3 @@ function createElement(str){
 function querySelectorAll(str){
      return document.querySelectorAll(str);
 }
-
