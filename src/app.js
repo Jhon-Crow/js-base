@@ -4,7 +4,7 @@ const HABBIT_KEY = 'HABBIT_KEY';
 const habbits = load();
 const imgsArr = [
     'Dumbbell',
-    'water',
+    'Water',
     'food',
     'alarm-clock',
     'bed',
