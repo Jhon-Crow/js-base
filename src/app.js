@@ -57,15 +57,17 @@ renderApp();
 
 function renderApp() {
     if (habbits.length){
-        const activeID = idToIndexOfHabbits(Number(document.location.hash.replace('#', '')) - 1);
+        const activeID = document.location.hash.replace('#', '');
         renderAllHabbitsSidebarBtn(habbits);
         page.sidebarHabbitButtons = querySelectorAll('.sidebar__item');
         page.sidebarDivs = querySelectorAll('.sidebar__div');
+        const target = Array.from(page.sidebarHabbitButtons)
+            .find((element) => element.id == activeID);
         renderAllHabbitsDeleteBtn(habbits);
         addEventListenerForEach(page.sidebarHabbitButtons, sidebarItemSetActiveAndRenderContent, 'click');
         addNewHabbitButton();
         renderPopupIcons(imgsArr);
-        sidebarItemSetActiveAndRenderContent(page.sidebarHabbitButtons[activeID > -1 ? activeID : 0]);
+        sidebarItemSetActiveAndRenderContent(target);
     } else {
         addNewHabbitButton();
         renderPopupIcons(imgsArr);
@@ -156,7 +158,7 @@ function onClickDeleteHabbitHandler(event){
     habbits.splice(index, 1);
     divToDelete.remove();
     if (habbits.length) {
-        sidebarItemSetActiveAndRenderContent(page.sidebarHabbitButtons[0])
+        sidebarItemSetActiveAndRenderContent(page.sidebarHabbitButtons[habbits.length])
     } else {
         setEmptyMainContent();
     }
@@ -244,7 +246,6 @@ function addDayChangeHabbitsArr(event){
     const comment = getFormOnSubmit(target).get('comment');
     if (comment) {
         habbits[idToIndexOfHabbits(activeSidebarItemID)].days.push({comment});
-        console.log(habbits[idToIndexOfHabbits(activeSidebarItemID)])
         return true;
     } else {
         visualError(target['comment'], 1000);
