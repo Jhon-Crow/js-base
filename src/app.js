@@ -4,7 +4,7 @@ const HABBIT_KEY = 'HABBIT_KEY';
 const habbits = load();
 const imgsArr = [
     'Dumbbell',
-    'water',
+    'Water',
     'food',
     'alarm-clock',
     'bed',
@@ -287,7 +287,7 @@ function renderPopupIcons(arr) {
     arr.map((imgName, index) => {
         iconSelect.innerHTML += `<input ${index === 0 ? 'checked' : null} type="radio" id='option${index}' name="iconOptions" value=${imgName}>
         <label class="icon " for='option${index}'>
-            <img src="./src/assets/${imgName}.svg" alt="sport"/>
+            <img src="./src/assets/${imgName}.svg" alt="${imgName}"/>
         </label>`
     });
 }
