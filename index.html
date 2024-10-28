@@ -26,7 +26,9 @@
                     </div>
                 </div>
             </header>
-            <main class="content__main"></main>
+            <main class="content__main">
+                <h1>Добавить привычку</h1>
+            </main>
         </div>
     </div>
     <div class="cover cover_hidden">
@@ -34,28 +36,7 @@
             <h2>Новая привычка</h2>
             <div class="icon-label">Иконка</div>
             <form onsubmit="onSubmitPopupHandler(event)" class="popup__form">
-            <div class="icon-select">
-
-                <div>
-                    <input checked type="radio" id="option1" name="iconOptions" value="Dumbbell">
-                    <label class="icon " for="option1">
-                        <img src="./src/assets/Dumbbell.svg" alt="sport"/>
-                    </label>
-                </div>
-                <div>
-                    <input type="radio" id="option2" name="iconOptions" value="Water">
-                    <label class="icon " for="option2">
-                        <img src="./src/assets/Water.svg" alt="water"/>
-                    </label>
-                </div>
-                <div>
-                    <input type="radio" id="option3" name="iconOptions" value="food">
-                    <label class="icon " for="option3">
-                        <img src="./src/assets/food.svg" alt="food"/>
-                    </label>
-                </div>
-<!--                TODO отрисовывать иконки мапом -->
-            </div>
+            <div class="icon-select"></div>
                 <input type="text" name="name" placeholder="Название"/>
                 <input type="text" name="aim" placeholder="Цель"/>
                 <button class="button" type="submit">Добавить</button>

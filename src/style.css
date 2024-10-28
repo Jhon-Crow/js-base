@@ -28,6 +28,21 @@
     cursor: pointer;
 }
 
+.sidebar__div {
+    position: relative;
+}
+
+.sidebar__delete {
+    position: absolute;
+    left: 3.2rem;
+    top: .5rem;
+    opacity: 5%;
+}
+
+.sidebar__delete:hover {
+    opacity: 60%;
+}
+
 .sidebar__item:hover {
     background-color: #6A6AFB;
 }
@@ -37,12 +52,21 @@
 }
 
 .sidebar__add {
+    box-shadow: 0 8px 14px 0 #3E6BE01F;
+    width: 2.875rem;
+    height: 2.8125rem;
+    border-radius: 0.875rem;
+    cursor: pointer;
     background: none;
     border: 1px solid #CAD5FF;
 }
 
 .sidebar__add:hover {
     background: #EFF2FF;
+}
+
+.sidebar__add:hover img {
+    filter: brightness(0) invert(1);
 }
 
 .content {

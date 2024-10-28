@@ -2,13 +2,22 @@
 
 const HABBIT_KEY = 'HABBIT_KEY';
 const habbits = load();
-const renderAllHabbitsSidebarBtn = (habbitsArr) => habbitsArr.map(elem => renderHabbitSidebarBtn(elem));
+const imgsArr = [
+    'Dumbbell',
+    'water',
+    'food'
+//     TODO добавить по больше значков
+];
 
-let activeSidebarItemID = '1';
+const renderAllHabbitsSidebarBtn = (habbitsArr) => habbitsArr.map(elem => renderHabbitSidebarBtnInDiv(elem));
+const renderAllHabbitsDeleteBtn = (habbitsArr) => habbitsArr.map(elem => renderHabbitDeleteBtn(elem));
+
+let activeSidebarItemID = habbits.length ? habbits[habbits.length - 1].id : '1';
 const page = {
         sidebar: querySelector('.sidebar'),
-        sidebarItems: 'init',
-        sidebarAddButton: 'init',
+        sidebarHabbitButtons: [],
+        sidebarDivs: 0,
+        sidebarAddButton: 0,
         header: {
             h1: querySelector('h1'),
             progressPercent: querySelector('.progress__percent'),
@@ -18,18 +27,29 @@ const page = {
         popup: querySelector('.cover')
     };
 
-renderApp(activeSidebarItemID);
+renderApp();
 
-function renderApp(activeSidebarItemID) {
-    renderAllHabbitsSidebarBtn(habbits);
-    page.sidebarItems = querySelectorAll('.sidebar__item');
-    addEventListenerForEach(page.sidebarItems, sidebarItemSetActiveAndRenderContent, 'click');
-    addNewHabbitButton();
-    habbitContentRender(habbits[activeSidebarItemID - 1]);
+function renderApp() {
+    if (habbits.length){
+        renderAllHabbitsSidebarBtn(habbits);
+        page.sidebarHabbitButtons = querySelectorAll('.sidebar__item');
+        page.sidebarDivs = querySelectorAll('.sidebar__div');
+        renderAllHabbitsDeleteBtn(habbits);
+        addEventListenerForEach(page.sidebarHabbitButtons, sidebarItemSetActiveAndRenderContent, 'click');
+        addNewHabbitButton();
+        renderPopupIcons(imgsArr);
+        sidebarItemSetActiveAndRenderContent(page.sidebarHabbitButtons[0]);
+        // habbitContentRender(habbits[idToIndex(activeSidebarItemID)]);
+    } else {
+        addNewHabbitButton();
+        renderPopupIcons(imgsArr);
+    }
 }
 
-const isActiveSidebarItem = (target) => target.id == activeSidebarItemID;
-const activeHabitRender = () => habbitContentRender(habbits[activeSidebarItemID - 1]);
+function activeHabitContentRender() {
+    console.log(idToIndex(activeSidebarItemID), habbits);
+    habbitContentRender(habbits[idToIndex(activeSidebarItemID)])
+}
 
 
 function addEventListenerForEach(elemsArr, handler, strEventName){
@@ -37,21 +57,24 @@ function addEventListenerForEach(elemsArr, handler, strEventName){
 }
 
 function sidebarItemSetActiveAndRenderContent(target) {
-    if (!isActiveSidebarItem(target)){
-        const prevElem = page.sidebarItems[activeSidebarItemID - 1];
-        removeIconActiveClass(prevElem);
+    console.log(target)
+        const prevElem = page.sidebarHabbitButtons[activeSidebarItemID - 1];
+        if (prevElem) removeIconActiveClass(prevElem);
         addClass('icon_active', target);
         activeSidebarItemID = target.id;
-        activeHabitRender();
-    }
+    console.log(activeSidebarItemID)
+        activeHabitContentRender();
 }
 
 function habbitContentRender(habbit) {
+    console.log(habbit)
+    if (!habbit) return undefined;
     renderHabbitHeader(habbit);
     renderHabbitDays(habbit.days);
 }
 
 function renderHabbitHeader(habbit){
+    if (!habbit) return;
     page.header.h1.innerText = habbit.name;
     const progress = habbit.days.length / habbit.target * 100;
     page.header.progressPercent.innerText = habbit.days.length / habbit.target > 1
@@ -78,6 +101,58 @@ function renderHabbitDays(days) {
     page.main.appendChild(getHabbitWithForm(days));
 }
 
+
+function renderHabbitDeleteBtn(habbitsItem){
+    const index = habbits.indexOf(habbitsItem);
+    const button = createElement('button');
+    addClass('habbit__delete', button)
+    addClass('sidebar__delete', button)
+    button.innerHTML = '<img src="src/assets/delete.svg">';
+    button.addEventListener('click', onClickDeleteHabbitHandler);
+    if (habbitsItem.parentNode) {
+        habbitsItem.parentNode.appendChild(button);
+    } else {
+        page.sidebarDivs[index].appendChild(button);
+    }
+    return button;
+}
+
+function idToIndex(id) {
+    const index = habbits.findIndex(obj => obj.id == id);
+    console.log(id, index, habbits[index])
+    return index;
+}
+
+function onClickDeleteHabbitHandler(event){
+
+    // TODO
+    const divToDelete = event.currentTarget.parentNode;
+    const index = idToIndex(event.currentTarget.previousSibling.id);
+    // console.log([...habbits], event.currentTarget.previousSibling.id)
+    // console.log(habbits[index])
+    habbits.splice(index, 1);
+    divToDelete.remove();
+    // if (!habbits.length){
+    //     setEmptyMainContent();
+    // }
+    if (habbits.length) {
+        console.log(page.sidebarHabbitButtons[0])
+        sidebarItemSetActiveAndRenderContent(page.sidebarHabbitButtons[0])
+    } else {
+        setEmptyMainContent();
+    }
+    saveHabbitsToLocalStorage();
+}
+
+function setEmptyMainContent(){
+    page.header.h1.innerText = '';
+    page.header.progressPercent.innerText = '';
+    page.header.progressCoverBar.style.width = '0%';
+    page.main.innerHTML = `
+            <h1>Добавить привычку</h1>
+        `;
+}
+
 function getHabbitWithForm(days){
     const habbitWithForm = createElement('div');
     addClass('habbit', habbitWithForm);
@@ -94,16 +169,18 @@ function getHabbitWithForm(days){
 
 function onSubmitDaysCommentHandler(event){
     if (!addDayChangeHabbitsArr(event)) return;
-    activeHabitRender();
+    activeHabitContentRender();
     saveHabbitsToLocalStorage();
 }
 
 function onSubmitPopupHandler (event) {
     if (!addNewHabbieToArr(event)) return;
     togglePopup();
-    const button = renderHabbitSidebarBtn(habbits[habbits.length - 1]);
+    const button = renderHabbitSidebarBtnInDiv(habbits[habbits.length - 1]);
     sidebarItemSetActiveAndRenderContent(button);
-    button.addEventListener('click', sidebarItemSetActiveAndRenderContent);
+    page.sidebarHabbitButtons = querySelectorAll('.sidebar__item');
+    button.addEventListener('click', (e) => sidebarItemSetActiveAndRenderContent(e.currentTarget));
+    renderHabbitDeleteBtn(button);
     saveHabbitsToLocalStorage();
 }
 
@@ -114,7 +191,7 @@ function addNewHabbieToArr(event){
     const name = formData.get('name');
     const aim = formData.get('aim');
     const template = {
-        id: habbits.length + 1,
+        id: habbits.length ? habbits[habbits.length - 1].id + 1 : 1,
         icon: `${iconOptions}`,
         name: `${name}`,
         target: Number(aim),
@@ -139,7 +216,7 @@ function addNewHabbieToArr(event){
 function onClickDeleteDayHandler(index){
     const activeDays = habbits[activeSidebarItemID - 1].days;
     activeDays.splice(index, 1);
-    activeHabitRender();
+    activeHabitContentRender();
     saveHabbitsToLocalStorage();
 }
 
@@ -169,19 +246,33 @@ function togglePopup() {
     page.popup.classList.toggle('cover_hidden');
 }
 
-function renderHabbitSidebarBtn(habbitsItem){
+function renderHabbitSidebarBtnInDiv(habbitsItem){
+    const div = document.createElement('div');
+    div.setAttribute('id', 'sidebarDiv' + habbitsItem.id);
+    addClass('sidebar__div', div);
     const button = getEmptySidebarBtnElem();
     button.setAttribute('id', habbitsItem.id);
-    if (habbitsItem.id == 1){
+    if (habbitsItem.id == (activeSidebarItemID === '1')){
         addClass('icon_active', button);
     }
     button.innerHTML = `<img src="src/assets/${habbitsItem.icon}.svg">`;
-    page.sidebar.insertBefore(button, page.sidebar.lastChild);
+    div.appendChild(button);
+    page.sidebar.insertBefore(div, page.sidebar.lastChild);
     return button;
 }
 
+function renderPopupIcons(arr) {
+    const iconSelect = document.querySelector('.icon-select');
+    arr.map((imgName, index) => {
+        iconSelect.innerHTML += `<input ${index === 0 ? 'checked' : null} type="radio" id='option${index}' name="iconOptions" value=${imgName}>
+        <label class="icon " for='option${index}'>
+            <img src="./src/assets/${imgName}.svg" alt="sport"/>
+        </label>`
+    });
+}
+
 function addNewHabbitButton() {
-    const button = getEmptySidebarBtnElem();
+    const button = createElement('button');
     addClass('sidebar__add', button);
     button.innerHTML = '<img src="src/assets/Add.svg">'
     page.sidebar.appendChild(button);
